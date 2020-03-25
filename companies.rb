@@ -16,7 +16,7 @@ class CourierCompany
 
   def isBig?; @messengers.length > 2 end
 
-  def first_allowed package, destination; @messengers.first.can_deliver?(package,destination) end
+  def first_allowed package; @messengers.first.can_deliver?(package) end
 
   def last_messenger_weight; @messengers.last.weight! end
 

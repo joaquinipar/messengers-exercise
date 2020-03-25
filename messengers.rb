@@ -22,9 +22,9 @@ class Messenger
     @vehicle.totalWeight(weight)
   end
 
-  def can_deliver? package, destination
+  def can_deliver? package
 
-    package.can_deliver?(self,destination)
+    package.can_deliver?(self)
   end
 
 end

@@ -19,24 +19,26 @@ class MessengersTest < Minitest::Test
 
     @matrix = MatrixDestination.new
 
-    @paid_package = Package.new true
+    @paid_package = Package.new true, @brooklyn
 
-    @unpaid_package = Package.new false
+    @unpaid_package = Package.new false, @brooklyn
+
+    @traveler_package = TravelerPackage.new [@brooklyn,@matrix], 200
 
     @company = CourierCompany.new [@neo,@chuck_norris,@robert]
 
   end
 
   def test_that_robert_in_bycicle_can_deliver_paid_package_to_brooklyn
-    assert @robert.can_deliver? @paid_package, @brooklyn
+    assert @robert.can_deliver? @paid_package
   end
 
   def test_that_neo_cannot_deliver_an_unpaid_package
-    refute @neo.can_deliver? @unpaid_package, @brooklyn
+    refute @neo.can_deliver? @unpaid_package
   end
 
   def test_that_a_not_paid_package_cannot_be_delivered
-    refute @robert.can_deliver? @unpaid_package, @brooklyn
+    refute @robert.can_deliver? @unpaid_package
   end
 
   def test_that_a_messenger_is_successfully_hired
@@ -46,12 +48,23 @@ class MessengersTest < Minitest::Test
 
   def test_that_the_fist_messenger_can_deliver
 
-    assert @company.first_allowed @paid_package, @brooklyn
+    assert @company.first_allowed @paid_package
   end
 
   def test_that_company_with_3_messengers_is_big
 
     assert @company.isBig?
+  end
+
+  def test_that_traveler_package_with_2_destinations_is_paid_with_200
+
+    assert @traveler_package.isPaid
+  end
+
+  def test_that_neo_cannot_deliver_a_traveler_package_to_brooklyn_and_matrix
+
+    refute @traveler_package.can_deliver? @neo
+
   end
 
 end
