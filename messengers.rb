@@ -24,7 +24,7 @@ class Messenger
 
   def can_deliver? package, destination
 
-    destination.allows(self) && package.isPaid
+    package.can_deliver?(self,destination)
   end
 
 end
