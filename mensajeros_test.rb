@@ -13,6 +13,8 @@ class MessengersTest < Minitest::Test
 
     @neo = Messenger.new(0,nil,false)
 
+    @generic_messenger = Messenger.new(75,@truck,true)
+
     @brooklyn = BrooklynDestination.new
 
     @matrix = MatrixDestination.new
@@ -20,6 +22,8 @@ class MessengersTest < Minitest::Test
     @paid_package = Package.new true
 
     @unpaid_package = Package.new false
+
+    @company = CourierCompany.new [@neo,@chuck_norris,@robert]
 
   end
 
@@ -35,6 +39,19 @@ class MessengersTest < Minitest::Test
     refute @robert.can_deliver? @unpaid_package, @brooklyn
   end
 
+  def test_that_a_messenger_is_successfully_hired
+    @company.hire @generic_messenger
+    assert_includes @company.messengers, @generic_messenger
+  end
 
+  def test_that_the_fist_messenger_can_deliver
+
+    assert @company.first_allowed @paid_package, @brooklyn
+  end
+
+  def test_that_company_with_3_messengers_is_big
+
+    assert @company.isBig?
+  end
 
 end
