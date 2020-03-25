@@ -2,20 +2,26 @@
 
 class Messenger
 
-  attr_reader :peso
+  attr_reader :weight
   attr_reader :vehicle
   attr_reader :can_call
 
   def initialize weight, vehicle, can_call
-    @peso = weight # En kilos
+    @weight = weight # En kilos
     @vehicle = vehicle
     @can_call = can_call
-  end
-  def can_call; @can_call end
 
-  def weight
+  end
+
+
+  def weight!
     return 0 if @vehicle.nil?
-    @vehicle.totalWeight(peso)
+    @vehicle.totalWeight(weight)
+  end
+
+  def can_deliver? package, destination
+
+    destination.allows(self) && package.isPaid
   end
 
 end
@@ -24,7 +30,7 @@ class StandardVehicle
   def initialize; end
 
   def totalWeight(messenger_weight)
-    return messenger_weight + 1
+    messenger_weight + 1
   end
 
 end
@@ -41,13 +47,30 @@ class Truck < StandardVehicle
 
 end
 
-bicycle = StandardVehicle.new
+class BrooklynDestination
 
-truck = Truck.new 2
+  def allows messenger
+    messenger.weight! <= 1000
+  end
 
-robert = Messenger.new(70,bicycle,false)
+end
 
-chuck_norris = Messenger.new(900,nil,true)
+class MatrixDestination
+
+  def allows messenger
+    messenger.can_call
+  end
+end
+
+class Package
+
+  attr_reader :isPaid
+
+  def initialize isPaid
+    @isPaid = isPaid
+  end
+
+end
 
 
 
