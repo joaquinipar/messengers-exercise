@@ -1,5 +1,5 @@
 require "minitest/autorun"
-load './mensajeros.rb'
+load './messengers.rb'
 
 class MessengersTest < Minitest::Test
   def setup
