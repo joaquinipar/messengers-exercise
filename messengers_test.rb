@@ -25,7 +25,7 @@ class MessengersTest < Minitest::Test
 
     @traveler_package = TravelerPackage.new [@brooklyn,@matrix], 200
 
-    @company = CourierCompany.new [@neo,@chuck_norris,@robert]
+    @company = CourierCompany.new [@neo,@chuck_norris,@robert], [@paid_package]
 
   end
 
@@ -66,5 +66,16 @@ class MessengersTest < Minitest::Test
     refute @traveler_package.can_deliver? @neo
 
   end
+
+  def test_that_someone_can_deliver_traveler_package
+
+    assert @company.able_to_deliver? @traveler_package
+  end
+
+  def test_that_chuck_norris_is_the_only_one_that_is_able_to_deliver_traveler_package
+
+    assert_equal @company.able_to_deliver(@traveler_package), [@chuck_norris]
+  end
+
 
 end

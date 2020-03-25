@@ -27,6 +27,7 @@ class Messenger
     package.can_deliver?(self)
   end
 
+  def deliver package; puts "Delivered!" end
 end
 
 
